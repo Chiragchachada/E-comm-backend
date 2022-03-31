@@ -28,5 +28,5 @@ userSchema.methods.getSignedJwtToken = function(){
     return token;
 }
 
-const userModel = mongoose.model("username", userSchema)
+const userModel = mongoose.model("userSchema", userSchema)
 module.exports = userModel
