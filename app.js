@@ -8,7 +8,9 @@ const port = 5000;
 //Import Routes
 const userRoutes = require('./Routes/userRoute')
 
+const productRoute = require('./Routes/productRoute')
 
+app.use('/products', productRoute)
 
 
 
