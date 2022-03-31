@@ -1,13 +1,30 @@
 const mongoose = require("mongoose")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const validator = require('validator')
 
 
 const userSchema = new mongoose.Schema({
-    email:String,
-    password:String,
-    username:String,
-    role:String
+    email: {
+        type: String,
+        required: true,
+        // validation on email
+        unique: true,
+        validate: [validator.isEmail, "Please enter a valid email"]
+    },
+    password: {
+        type: String,
+        required: [true, "Please add a password"],
+        minLength: 6
+    },
+    role: {
+        type: String,
+        default: "user"
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    }
 },
 {collection:"User"});
 
