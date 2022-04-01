@@ -13,8 +13,9 @@ exports.signup = async (req,res,next)=>{
     const token = user.getSignedJwtToken();
     console.log(token)
     res.status(200).json({
-        success:true,
-        token:token
+        auth:true,
+        token:token,
+        user:user.username
     })
 
     }else{
