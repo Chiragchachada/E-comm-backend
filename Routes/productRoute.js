@@ -4,7 +4,7 @@ const { getAllProducts, createProduct, deleteProduct } = require('../Controller/
 const router = express.Router();
 
 
-router.route('/products')
+router.route('/')
 .get(getAllProducts)
 .post(createProduct)
 

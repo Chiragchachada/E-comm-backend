@@ -1,6 +1,7 @@
 //Import Express and Mongoose
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require("cors");
 const app = express()
 const port = 5000;
 
@@ -26,6 +27,8 @@ connectionToDB()
 
 
 //Import Use
+app.use(cors());
+
 app.use(express.json()) 
 app.use('/user', userRoutes)
 app.use('/products', productRoute)

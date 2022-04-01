@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     category:String,
     image:String,
     price:Number
+    
 },
 {collection:"Products"});
 
