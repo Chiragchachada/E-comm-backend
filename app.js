@@ -3,7 +3,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors");
 const app = express()
-const port = 5000;
+const port = 8080;
 
 
 //Import Routes
@@ -18,7 +18,7 @@ const productRoute = require('./Routes/productRoute')
 
 const url = "mongodb://localhost:27017/Team-A-Project"
 
-const connectionToDB= async ()=>{
+const connectionToDB = async () => {
     await mongoose.connect(url);
     console.log("connected successfully");
 }
@@ -27,11 +27,10 @@ connectionToDB()
 
 
 //Import Use
-app.use(cors());
-
-app.use(express.json()) 
+app.use(express.json())
 app.use('/user', userRoutes)
 app.use('/products', productRoute)
+app.use('/cart', productRoute)
 
 
-app.listen(port,()=> console.log("running on port", port));
+app.listen(port, () => console.log("running on port", port));
