@@ -3,7 +3,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors");
 const app = express()
-const port = 8080;
+const port = 5000;
 
 
 //Import Routes
@@ -27,10 +27,11 @@ connectionToDB()
 
 
 //Import Use
+app.use(cors())
 app.use(express.json())
 app.use('/user', userRoutes)
 app.use('/products', productRoute)
-app.use('/cart', productRoute)
+// app.use('/cart', productRoute)
 
 
 app.listen(port, () => console.log("running on port", port));
