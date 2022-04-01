@@ -10,7 +10,6 @@ const userRoutes = require('./Routes/userRoute')
 
 const productRoute = require('./Routes/productRoute')
 
-app.use('/products', productRoute)
 
 
 
@@ -29,6 +28,7 @@ connectionToDB()
 //Import Use
 app.use(express.json()) 
 app.use('/user', userRoutes)
+app.use('/products', productRoute)
 
 
 app.listen(port,()=> console.log("running on port", port));

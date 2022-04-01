@@ -18,5 +18,27 @@ const authenticate = async function(req , res, next){
     }
 }
 
+const isAuthenticateUser = async function(req,res,next){
+    const token = req.header["token"];
+    console.log(token);
+    if(token) {
+        const tokens = token.split(' ')
+        try{
+            const decodeData = jwt.verify(tokens[1], "p@ssw0rd");
+            console.log("decodeData", decodeData);
+            if(decodeData.role){
+                req.role = decodeData.role
+            }
+            next();
+        }catch(err){
+            console.log("error caught", err);
+            next(err)
 
-module.exports={authenticate}
+        }
+    }
+    else{
+        res.status(403).send('You are not authorised to access this data')
+    }
+}
+
+module.exports={authenticate,isAuthenticateUser}
