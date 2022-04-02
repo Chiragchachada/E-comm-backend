@@ -10,6 +10,8 @@ const port = 5000;
 const userRoutes = require('./Routes/userRoute')
 
 const productRoute = require('./Routes/productRoute')
+const cartRoute = require('./Routes/cartRoute')
+
 
 
 
@@ -31,6 +33,8 @@ app.use(cors())
 app.use(express.json())
 app.use('/user', userRoutes)
 app.use('/products', productRoute)
+app.use('/cart', cartRoute)
+
 // app.use('/cart', productRoute)
 
 

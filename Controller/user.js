@@ -15,7 +15,8 @@ exports.signup = async (req,res,next)=>{
     res.status(200).json({
         auth:true,
         token:token,
-        user:user.username
+        user:user.username,
+        userId:user._id
     })
 
     }else{
@@ -35,7 +36,8 @@ exports.login = async (req, res, next)=>{
 res.json({
     auth:true,
     token:token,
-    user:user.username
+    user:user.username,
+    userId:user._id
 })
 
 }
