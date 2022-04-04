@@ -2,6 +2,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors");
+const errorHandler = require("./middleware/errorHandler");
 const app = express()
 const port = 5000;
 
@@ -34,6 +35,8 @@ app.use(express.json())
 app.use('/user', userRoutes)
 app.use('/products', productRoute)
 app.use('/cart', cartRoute)
+
+app.use(errorHandler)
 
 // app.use('/cart', productRoute)
 
