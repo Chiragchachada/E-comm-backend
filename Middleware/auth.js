@@ -1,13 +1,13 @@
 const userModel = require('../Models/userModel')
 const jwt = require('jsonwebtoken')
 
-const authenticate = async function(req , res, next){
+const authenticate = async function (req, res, next) {
     console.log("Finding user");
-    const user = await userModel.findOne({email:req.body.email})
+    const user = await userModel.findOne({ email: req.body.email })
 
-    if(user){
+    if (user) {
         const isMatch = await user.matchPassword(req.body.password)
-        if(isMatch){
+        if (isMatch) {
             console.log("password match");
            
             next()

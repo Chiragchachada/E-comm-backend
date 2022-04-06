@@ -1,38 +1,37 @@
 const userModel = require('../Models/userModel');
+const asyncHandler = require('express-async-handler');
 
 
-
-
-
-exports.signup = async (req,res,next)=>{
-    const findUser = await userModel.findOne({email:req.body.email})
-    if(!findUser){
+exports.signup = asyncHandler(async (req, res, next) => {
+    const findUser = await userModel.findOne({ email: req.body.email })
+    if (!findUser) {
 
         console.log("Creating User");
-    const user = await userModel.create(req.body)
-    const token = user.getSignedJwtToken();
-    console.log(token)
-    res.status(200).json({
-        auth:true,
-        token:token,
-        user:user.username,
-        userId:user._id
-    })
+        const user = await userModel.create(req.body)
+        const token = user.getSignedJwtToken();
+        console.log(token)
+        res.status(200).json({
+            auth: true,
+            token: token,
+            user: user.username,
+            userId: user._id
+        })
 
-    }else{
+    } else {
         console.log("User Already Exist");
         res.status(400).json({
-            success:false,
-            err:"User Already Exist"
+            success: false,
+            err: "User Already Exist"
         })
     }
 
 }
+)
 
-
-exports.login = async (req, res, next)=>{
-    const user = await userModel.findOne({email:req.body.email})
+exports.login = asyncHandler(async (req, res, next) => {
+    const user = await userModel.findOne({ email: req.body.email })
     const token = user.getSignedJwtToken();
+<<<<<<< HEAD
     if(user.role === "user"){
         res.json({
             auth:true,
@@ -63,5 +62,13 @@ exports.adminlogin = async(req,res,next)=>{
           adminerr:"You are not admin"
       })
   }
+=======
+    res.json({
+        auth: true,
+        token: token,
+        user: user.username,
+        userId: user._id
+    })
+>>>>>>> 62a9ebe0fe8ca094a23fb6a966ffb7c59a65a1fc
 
-}
+})
