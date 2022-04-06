@@ -1,7 +1,7 @@
 const cartModel = require('../Models/cartModel')
 const asyncHandler = require('express-async-handler')
 
-exports.addToCart = async (req, res, next) => {
+exports.addToCart = asyncHandler(async (req, res, next) => {
         console.log('creating.. ',req.body);
         const product = await cartModel.create(req.body);
         //    res.json(products)
@@ -11,7 +11,7 @@ exports.addToCart = async (req, res, next) => {
             data: product
         })
     
-    }
+    })
     
     exports.getCartItems = asyncHandler(async (req, res, next) => {
         console.log('getting.. ',req.body.id);

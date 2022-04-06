@@ -31,7 +31,6 @@ exports.signup = asyncHandler(async (req, res, next) => {
 exports.login = asyncHandler(async (req, res, next) => {
     const user = await userModel.findOne({ email: req.body.email })
     const token = user.getSignedJwtToken();
-<<<<<<< HEAD
     if(user.role === "user"){
         res.json({
             auth:true,
@@ -45,7 +44,7 @@ exports.login = asyncHandler(async (req, res, next) => {
           })
       }
 
-}
+})
 
 exports.adminlogin = async(req,res,next)=>{
     const user = await userModel.findOne({email:req.body.email})
@@ -62,13 +61,5 @@ exports.adminlogin = async(req,res,next)=>{
           adminerr:"You are not admin"
       })
   }
-=======
-    res.json({
-        auth: true,
-        token: token,
-        user: user.username,
-        userId: user._id
-    })
->>>>>>> 62a9ebe0fe8ca094a23fb6a966ffb7c59a65a1fc
 
-})
+}
