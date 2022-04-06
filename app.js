@@ -7,8 +7,8 @@ const port = 5000;
 
 
 //Import Routes
+const errorHandler = require("./middleware/errorHandler");
 const userRoutes = require('./Routes/userRoute')
-
 const productRoute = require('./Routes/productRoute')
 const cartRoute = require('./Routes/cartRoute')
 
@@ -34,8 +34,9 @@ app.use(express.json())
 app.use('/user', userRoutes)
 app.use('/products', productRoute)
 app.use('/cart', cartRoute)
+app.use(errorHandler)
 
-// app.use('/cart', productRoute)
+
 
 
 app.listen(port, () => console.log("running on port", port));

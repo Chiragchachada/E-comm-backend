@@ -1,7 +1,8 @@
 const Product = require('../Models/productModel')
+const asyncHandler = require('express-async-handler')
 
 
-exports.getAllProducts = async (req, res, next) => {
+exports.getAllProducts =asyncHandler( async (req, res, next) => {
 
     console.log('getting.. ');
 
@@ -16,9 +17,9 @@ exports.getAllProducts = async (req, res, next) => {
         data: products
     })
 
-}
+})
 
-exports.createProduct = async (req, res, next) => {
+exports.createProduct = asyncHandler(async (req, res, next) => {
 
     console.log('creating.. ');
     const product = await Product.create(req.body);
@@ -29,15 +30,15 @@ exports.createProduct = async (req, res, next) => {
         data: product
     })
 
-}
+})
 
 
-exports.deleteProduct = async (req, res, next) => {
-    console.log('De..')
+exports.deleteProduct = asyncHandler(async (req, res, next) => {
+    console.log('Del..')
     const products = await Product.findByIdAndDelete(req.params.id, req.body)
 
     res.status(204).json({
         success: true
     })
-}
+})
 

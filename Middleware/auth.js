@@ -1,4 +1,5 @@
 const userModel = require('../Models/userModel')
+const jwt = require('jsonwebtoken')
 
 const authenticate = async function(req , res, next){
     console.log("Finding user");
@@ -8,36 +9,57 @@ const authenticate = async function(req , res, next){
         const isMatch = await user.matchPassword(req.body.password)
         if(isMatch){
             console.log("password match");
+           
             next()
         }else{
-            res.status(401).send("Invalid Password")
+            res.status(401).json({err:"Invalid Password"})
         }
     }else{
-        res.status(404).send("Invalid Credentials")
+        res.status(403).json({err:"Invalid Credentials"})
     }
 }
 
-const isAuthenticateUser = async function(req,res,next){
-    const token = req.header["token"];
+const isAuthenticatedUser = async function(req, res, next){
+     console.log("reqqqqqq",req.header)
+    // extract token for req header
+    const token = req.headers['authorization'];
     console.log(token);
     if(token) {
-        const tokens = token.split(' ')
+        const tokens = token.split(' ');
+        console.log("split",tokens);
+
+        // verify tthe token
         try{
-            const decodeData = jwt.verify(tokens[1], "p@ssw0rd");
-            console.log("decodeData", decodeData);
-            if(decodeData.role){
-                req.role = decodeData.role
+            const decodedData = jwt.verify(tokens[1], "p@ssw0rd");
+            console.log(decodedData);
+            console.log("here");
+            if(decodedData.role){
+                req.role = decodedData.role
             }
             next();
-        }catch(err){
-            console.log("error caught", err);
-            next(err)
-
+        }
+        catch(err){
+            console.log('Error caught: ', err)
+            res.status(403).json({msg:'You are not authorized to access this data'});
+            // next(err);
         }
     }
     else{
-        res.status(403).send('You are not authorised to access this data')
+        res.status(403).json({msg:'You are not authorized to access this data'})
+    }
+    
+   
+}
+
+const authorizeRoles = (...roles) => {
+    return (req, res, next)=> {
+        if(roles.includes(req.role)){
+            next();
+        }
+        else{
+            res.status(403).json({err:'You dont have an authorized role to access'})
+        }
     }
 }
 
-module.exports={authenticate,isAuthenticateUser}
+module.exports={authenticate,isAuthenticatedUser,authorizeRoles}

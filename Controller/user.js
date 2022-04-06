@@ -33,11 +33,35 @@ exports.signup = async (req,res,next)=>{
 exports.login = async (req, res, next)=>{
     const user = await userModel.findOne({email:req.body.email})
     const token = user.getSignedJwtToken();
-res.json({
-    auth:true,
-    token:token,
-    user:user.username,
-    userId:user._id
-})
+    if(user.role === "user"){
+        res.json({
+            auth:true,
+            token:token,
+            user:user.username,
+            userId:user._id
+        })
+      }else{
+          res.status(403).json({
+              usererr:"You are not user"
+          })
+      }
+
+}
+
+exports.adminlogin = async(req,res,next)=>{
+    const user = await userModel.findOne({email:req.body.email})
+    const token = user.getSignedJwtToken();
+  if(user.role === "admin"){
+    res.json({
+        auth:true,
+        token:token,
+        user:user.username,
+        userId:user._id
+    })
+  }else{
+      res.status(403).json({
+          adminerr:"You are not admin"
+      })
+  }
 
 }

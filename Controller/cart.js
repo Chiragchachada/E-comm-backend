@@ -1,4 +1,5 @@
 const cartModel = require('../Models/cartModel')
+const asyncHandler = require('express-async-handler')
 
 exports.addToCart = async (req, res, next) => {
         console.log('creating.. ',req.body);
@@ -12,7 +13,7 @@ exports.addToCart = async (req, res, next) => {
     
     }
     
-    exports.getCartItems = async (req, res, next) => {
+    exports.getCartItems = asyncHandler(async (req, res, next) => {
         console.log('getting.. ',req.body.id);
     
         const products = await cartModel.find({user:req.body.id})
@@ -26,14 +27,14 @@ exports.addToCart = async (req, res, next) => {
             data: products
         })
     
-    }
+    })
     
 
-    exports.deleteItem = async (req, res, next) => {
+    exports.deleteItem = asyncHandler(async (req, res, next) => {
         console.log('De..')
         const products = await cartModel.findByIdAndDelete(req.params.id, req.body)
     
         res.status(204).json({
             success: true
         })
-    }
+    })
